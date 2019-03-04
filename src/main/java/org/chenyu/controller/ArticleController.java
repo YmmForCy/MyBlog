@@ -8,6 +8,7 @@ import org.chenyu.service.UserService;
 import org.pegdown.PegDownProcessor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -43,53 +44,6 @@ public class ArticleController {
         return "views/index";
     }
 
-    @RequestMapping("/column/{displayName}/{category}")
-    public String column(@PathVariable("category") String category,Model model,@PathVariable("displayName") String displayName) {
-        model.addAttribute("articles", articleService.getArticlesByCategoryName(category));
-        model.addAttribute("displayName", displayName);
-        return "views/columnPage";
-    }
-
-    @RequestMapping("/search")
-    public String search(Model model, String searchText) {
-        searchText = "%" + searchText + "%";
-        List<Article> articles = articleService.getArticleByText(searchText);
-
-        model.addAttribute("articles", articles);
-        return "views/index";
-    }
-
-    @RequestMapping("/detail/{id}/{category}")
-    public String detail(@PathVariable("id") Long id, Model model) {
-        Article article = articleService.getArticleById(id);
-        //System.out.println(article.getContent());
-        //将Markdown解析为HTML
-        /*Markdown markdown = new Markdown();
-        try {
-            StringWriter out = new StringWriter();
-            markdown.transform(new StringReader(article.getContent()), out);
-            out.flush();
-            article.setContent(out.toString());
-            System.out.println("------------------");
-            System.out.println(article.getContent());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }*/
-
-        PegDownProcessor pdp = new PegDownProcessor(Integer.MAX_VALUE);
-        article.setContent(pdp.markdownToHtml(article.getContent()));
-
-        model.addAttribute("article", article);
-        return "views/detail";
-    }
-
-    //访问后台首页：localhost:8080/chenyu，跳转到admin/index.jsp，如果没登录，拦截器需要先登录
-    @RequestMapping("/chenyu")
-    public String admin(Model model) {
-        model.addAttribute("articlesForAdmin", articleService.getAllArticle());
-        return "admin/index";
-    }
-
     //跳转到后台登录页面，admin/login.jsp
     @RequestMapping("/chenyu/login")
     public String login() {
@@ -121,12 +75,73 @@ public class ArticleController {
 //        return "redirect:/chenyu";
 //    }
 
+    // 登录
     @RequestMapping(method = RequestMethod.GET, value = "/chenyu/dologin")
-    public String doLogin(HttpServletRequest request, Model model) {
+    public String doLogin(HttpServletRequest request) {
         if (request.getSession().getAttribute("user") == null) {
             return "admin/login";
         }
         return "redirect:/chenyu";
+    }
+
+    // 退出
+    @GetMapping(value = "/chenyu/doLogout")
+    public String doLogout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/";
+    }
+
+    //根据分类查询文章
+    @RequestMapping("/column/{displayName}/{category}")
+    public String column(@PathVariable("category") String category,Model model,@PathVariable("displayName") String displayName) {
+        model.addAttribute("articles", articleService.getArticlesByCategoryName(category));
+        model.addAttribute("displayName", displayName);
+        return "views/columnPage";
+    }
+
+    //搜索文章
+    @RequestMapping("/search")
+    public String search(Model model, String searchText) {
+        if (searchText == null) searchText = "";
+
+        searchText = "%" + searchText + "%";
+        List<Article> articles = articleService.getArticleByText(searchText);
+
+        model.addAttribute("articles", articles);
+        model.addAttribute("searchText", searchText);
+        return "views/index";
+    }
+
+    //查看文章详情
+    @RequestMapping("/detail/{id}/{category}")
+    public String detail(@PathVariable("id") Long id, Model model) {
+        Article article = articleService.getArticleById(id);
+        //System.out.println(article.getContent());
+        //将Markdown解析为HTML
+        /*Markdown markdown = new Markdown();
+        try {
+            StringWriter out = new StringWriter();
+            markdown.transform(new StringReader(article.getContent()), out);
+            out.flush();
+            article.setContent(out.toString());
+            System.out.println("------------------");
+            System.out.println(article.getContent());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }*/
+
+        PegDownProcessor pdp = new PegDownProcessor(Integer.MAX_VALUE);
+        article.setContent(pdp.markdownToHtml(article.getContent()));
+
+        model.addAttribute("article", article);
+        return "views/detail";
+    }
+
+    //访问后台首页：localhost:8080/chenyu，跳转到admin/index.jsp，如果没登录，拦截器需要先登录
+    @RequestMapping("/chenyu")
+    public String admin(Model model) {
+        model.addAttribute("articlesForAdmin", articleService.getAllArticle());
+        return "admin/index";
     }
 
     //点击写博客，GET请求，跳转到admin/write.jsp
@@ -140,7 +155,7 @@ public class ArticleController {
         return "admin/write";
     }
 
-    //点击发表，POST请求
+    // 新增、修改，POST请求
     @RequestMapping(value = "/chenyu/write", method = RequestMethod.POST)
     public String write(Article article) {
         //article.setDate(new Date().toString());

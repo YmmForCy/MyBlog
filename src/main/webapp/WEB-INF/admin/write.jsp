@@ -36,6 +36,7 @@
                             </c:otherwise>
                         </c:choose>
 
+                        <%--选择分组--%>
                         <ul class="dropdown-menu">
                             <c:forEach var="category" items="${categories}">
                                 <li>
@@ -45,6 +46,8 @@
                         </ul>
                     </div>
                     <input name="category" id="categoryInput" type="hidden">
+
+                    <%--标题回显--%>
                     <c:choose>
                         <c:when test="${article==null}">
                             <input type="text" class="form-control" placeholder="标题" name="title">
@@ -57,7 +60,8 @@
                     </c:choose>
                 </div>
             </div>
-            <%--<div class="row">--%>
+
+            <%--发表、新增--%>
             <c:choose>
                 <c:when test="${article==null}">
                     <div class="col-lg-6" style="text-align: right;">
@@ -80,6 +84,7 @@
         <br>
         <div id="layout" style="width: 100%;height: 100%">
             <div id="test-editormd">
+                <%--文章内容回显--%>
                 <c:choose>
                     <c:when test="${article==null}">
                         <textarea style="display:none;" name="content"></textarea>

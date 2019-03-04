@@ -40,7 +40,7 @@
     <select id="getCategoryById" parameterType="long" resultMap="categoryType">
         SELECT * FROM category WHERE id=#{id}
     </select>
-    <select id="getArticlesByCategoryName" parameterType="long" resultType="org.chenyu.entity.Article">
+    <select id="getArticlesByCategoryId" parameterType="long" resultType="org.chenyu.entity.Article">
         SELECT a.*,c.name as category FROM article a,category c WHERE a.status = 1 AND a.categoryId=c.id AND categoryId=#{categoryId}
     </select>
 </mapper>

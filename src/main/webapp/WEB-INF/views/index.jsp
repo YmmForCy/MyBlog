@@ -26,4 +26,20 @@
     </div>
 </c:forEach>
 </body>
+<script type="text/javascript">
+    window.onload = function () {
+        getUrlParam();
+    };
+
+    function getUrlParam() {
+        // 获取参数
+        var url = window.location.search;
+        // 正则筛选地址栏
+        var reg = new RegExp("(^|&)searchText=([^&]*)(&|$)");
+        // 匹配目标参数
+        var result = url.substr(1).match(reg);
+        //返回参数值
+        document.getElementById("searchText").value = result ? decodeURIComponent(result[2]) : null;
+    }
+</script>
 </html>

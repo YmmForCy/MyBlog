@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     String contextPath = request.getContextPath();
@@ -38,14 +39,28 @@
                 </ul>
                 <form class="navbar-form navbar-right">
                     <div class="input-group">
-                        <input id="searchText" type="text" class="form-control" placeholder="搜索">
+                        <input onkeydown="searchArticle()" id="searchText" type="text" class="form-control"
+                               placeholder="搜索">
                         <span class="input-group-btn">
-                            <button class="btn btn-default" type="button" onclick="searchArticle()">Go!</button>
+                            <button id="btnSearch" class="btn btn-default" type="button"
+                                    onclick="searchArticle()">Go!</button>
                         </span>
+                        <%--<input type="text" placeholder="搜索" class="form-control" onkeydown="onKeyDown(event)"/>
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>--%>
+
                     </div>
-                    <button onclick="onLogin()" type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">
-                        登录
-                    </button>
+                    <c:if test="${user == null}">
+                        <button onclick="onLogin()" type="button" class="btn btn-primary" data-toggle="button"
+                                aria-pressed="false" autocomplete="off">
+                            登录
+                        </button>
+                    </c:if>
+                    <c:if test="${user != null}">
+                        <button onclick="onLogout()" type="button" class="btn btn-primary" data-toggle="button"
+                                aria-pressed="false" autocomplete="off">
+                            退出
+                        </button>
+                    </c:if>
                 </form>
 
             </div>
@@ -68,15 +83,47 @@
             $("#" + ids[i]).removeAttr("class");
         }
     }
-    
+
     function searchArticle() {
         //alert($("#searchText").val());
         var searchText = $("#searchText").val();
-        searchText = searchText?searchText:"";
+        searchText = searchText ? searchText : "";
         location.href = "/search?searchText=" + searchText;
     }
 
     function onLogin() {
         location.href = "/chenyu";
     }
+
+    function onLogout() {
+        location.href = "/chenyu/doLogout"
+    }
+
+    /*function getQueryVariable()
+    {
+        var query = window.location.search.substring(1);
+        /!*var vars = query.split("&");
+        for (var i=0;i<vars.length;i++) {
+            var pair = vars[i].split("=");
+            if(pair[0] == variable){return pair[1];}
+        }*!/
+        var para = query.split("=");
+        document.getElementById("searchText").value = para[1];
+    }*/
+    //回车提交事件
+    function onKeyDown(event) {
+        var e = event || window.event || arguments.callee.caller.arguments[0];
+        if (e && e.keyCode == 27) { // 按 Esc
+            //要做的事情
+        }
+        if (e && e.keyCode == 113) { // 按 F2
+            //要做的事情
+        }
+        if (e && e.keyCode == 13) { // enter 键
+            searchArticle();
+        }
+
+    }
+
+    //--------回车提交事件完毕---------------------//
 </script>

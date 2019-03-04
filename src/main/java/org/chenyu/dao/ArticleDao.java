@@ -17,7 +17,7 @@ public interface ArticleDao {
 
     public List<Article> getFirst10Article();
 
-    public List<Article> getArticlesByCategoryName(Long categoryId);
+    public List<Article> getArticlesByCategoryId(Long categoryId);
 
     public List<Category> getCategories();
 
