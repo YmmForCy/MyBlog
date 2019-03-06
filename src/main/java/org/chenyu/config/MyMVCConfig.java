@@ -44,6 +44,9 @@ public class MyMVCConfig extends WebMvcConfigurerAdapter {
         //两个*表示以/assets开始的任意层级的路径都可以访问得到图片，如<img src="../assets/img/1.png">
         //一个*表示只可以访问assets目录下的图片文件
         registry.addResourceHandler("/static/**").addResourceLocations("/WEB-INF/static/");
+        registry.addResourceHandler("/views/**").addResourceLocations("/WEB-INF/views/");
+        registry.addResourceHandler("/src/**").addResourceLocations("/WEB-INF/src/");
+        registry.addResourceHandler("/lib/**").addResourceLocations("/WEB-INF/lib/");
     }
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
