@@ -39,25 +39,18 @@
                 </ul>
                 <form class="navbar-form navbar-right">
                     <div class="input-group">
-                        <input onkeydown="searchArticle()" id="searchText" type="text" class="form-control"
-                               placeholder="搜索">
+                        <input id="searchText" type="text" class="form-control" placeholder="搜索">
                         <span class="input-group-btn">
-                            <button id="btnSearch" class="btn btn-default" type="button"
-                                    onclick="searchArticle()">Go!</button>
+                            <button id="btnSearch" class="btn btn-default" type="button" onclick="searchArticle()">Go!</button>
                         </span>
-                        <%--<input type="text" placeholder="搜索" class="form-control" onkeydown="onKeyDown(event)"/>
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>--%>
-
                     </div>
                     <c:if test="${user == null}">
-                        <button onclick="onLogin()" type="button" class="btn btn-primary" data-toggle="button"
-                                aria-pressed="false" autocomplete="off">
+                        <button onclick="onLogin()" type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">
                             登录
                         </button>
                     </c:if>
                     <c:if test="${user != null}">
-                        <button onclick="onLogout()" type="button" class="btn btn-primary" data-toggle="button"
-                                aria-pressed="false" autocomplete="off">
+                        <button onclick="onLogout()" type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">
                             退出
                         </button>
                     </c:if>
@@ -87,7 +80,7 @@
     function searchArticle() {
         //alert($("#searchText").val());
         var searchText = $("#searchText").val();
-        searchText = searchText ? searchText : "";
+        searchText = searchText?searchText:"";
         location.href = "/search?searchText=" + searchText;
     }
 
@@ -111,19 +104,10 @@
         document.getElementById("searchText").value = para[1];
     }*/
     //回车提交事件
-    function onKeyDown(event) {
-        var e = event || window.event || arguments.callee.caller.arguments[0];
-        if (e && e.keyCode == 27) { // 按 Esc
-            //要做的事情
-        }
-        if (e && e.keyCode == 113) { // 按 F2
-            //要做的事情
-        }
-        if (e && e.keyCode == 13) { // enter 键
+    $("body").keydown(function() {
+        if (event.keyCode == "13") {//keyCode=13是回车键
             searchArticle();
         }
-
-    }
-
+    });
     //--------回车提交事件完毕---------------------//
 </script>

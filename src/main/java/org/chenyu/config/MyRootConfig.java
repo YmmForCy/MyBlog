@@ -7,9 +7,12 @@ import org.mybatis.spring.mapper.MapperScannerConfigurer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Controller;
+import redis.clients.jedis.JedisPoolConfig;
 
 import java.io.IOException;
 
@@ -23,12 +26,16 @@ import java.io.IOException;
 @ComponentScan(
         value = "org.chenyu",
         excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, value = Controller.class))
-@PropertySource(value = "classpath:/jdbc.properties", encoding = "UTF-8")
+@PropertySource(value = {"classpath:/jdbc.properties", "classpath:/redis-config.properties"}, encoding = "UTF-8")
 @EnableScheduling
 public class MyRootConfig {
     @Bean
     public DBConfig dbConfig() {
         return new DBConfig();
+    }
+    @Bean
+    public RedisConfig redisConfig() {
+        return new RedisConfig();
     }
     /*@Bean
     public ArticleTask articleTask() {
@@ -80,4 +87,32 @@ public class MyRootConfig {
         dataSourceTransactionManager.setDataSource(dataSource(dbConfig));
         return dataSourceTransactionManager;
     }
+
+    /*@Bean
+    public JedisPoolConfig jedisPoolConfig(RedisConfig redisConfig) {
+        JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
+        jedisPoolConfig.setMaxWaitMillis(Long.valueOf(redisConfig.maxWait));
+        jedisPoolConfig.setMaxIdle(Integer.valueOf(redisConfig.maxIdle));
+        jedisPoolConfig.setTestOnBorrow(Boolean.getBoolean(redisConfig.testOnBorrow));
+
+        return new JedisPoolConfig();
+    }
+
+    @Bean
+    public JedisConnectionFactory jedisConnectionFactory(RedisConfig redisConfig, JedisPoolConfig jedisPoolConfig) {
+        JedisConnectionFactory factory = new JedisConnectionFactory();
+        factory.setHostName(redisConfig.hostName);
+        factory.setPort(Integer.valueOf(redisConfig.port));
+        factory.setPassword(redisConfig.password);
+        factory.setPoolConfig(jedisPoolConfig);
+
+        return factory;
+    }
+
+    @Bean
+    public RedisTemplate redisTemplate(JedisConnectionFactory factory) {
+        RedisTemplate redisTemplate = new RedisTemplate();
+        redisTemplate.setConnectionFactory(factory);
+        return redisTemplate;
+    }*/
 }

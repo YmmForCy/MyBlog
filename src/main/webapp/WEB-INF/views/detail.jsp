@@ -22,8 +22,13 @@
         <div class="panel-heading">
             <h3 class="panel-title">${article.title}</h3>
         </div>
-        <div class="panel-body">
 
+        <%--<div class="span3">
+            <div id="toc">
+            </div><!--/.well -->
+        </div><!--/span-->--%>
+
+        <div class="panel-body">
             <span id="articleContent">${article.content}</span>
         </div>
     </div>
