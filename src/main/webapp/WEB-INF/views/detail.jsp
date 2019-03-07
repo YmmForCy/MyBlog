@@ -55,7 +55,7 @@
         </div><!--/span-->
         <div class="span9">
             <div class="panel-heading">
-                <h3 class="panel-title">${article.title}</h3>
+                <h1 class="panel-title">${article.title}</h1>
             </div>
 
             <div class="panel-body">
@@ -78,7 +78,7 @@
 <script>
     $(function() {
         var toc = $("#toc").tocify({
-            selectors: "h2,h3,h4,h5"
+            selectors: "h2,h3,h4,h5,h6"
         });
 
         //prettyPrint();

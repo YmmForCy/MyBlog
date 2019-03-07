@@ -46,7 +46,7 @@ public class MyMVCConfig extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/static/**").addResourceLocations("/WEB-INF/static/");
         registry.addResourceHandler("/views/**").addResourceLocations("/WEB-INF/views/");
         registry.addResourceHandler("/src/**").addResourceLocations("/WEB-INF/src/");
-        registry.addResourceHandler("/lib/**").addResourceLocations("/WEB-INF/lib/");
+        registry.addResourceHandler("/libs/**").addResourceLocations("/WEB-INF/libs/");
     }
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
