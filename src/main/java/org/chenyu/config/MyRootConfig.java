@@ -88,7 +88,8 @@ public class MyRootConfig {
         return dataSourceTransactionManager;
     }
 
-    /*@Bean
+    //redis
+    @Bean
     public JedisPoolConfig jedisPoolConfig(RedisConfig redisConfig) {
         JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
         jedisPoolConfig.setMaxWaitMillis(Long.valueOf(redisConfig.maxWait));
@@ -114,5 +115,5 @@ public class MyRootConfig {
         RedisTemplate redisTemplate = new RedisTemplate();
         redisTemplate.setConnectionFactory(factory);
         return redisTemplate;
-    }*/
+    }
 }

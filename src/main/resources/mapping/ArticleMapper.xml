@@ -41,6 +41,6 @@
         SELECT * FROM category WHERE id=#{id}
     </select>
     <select id="getArticlesByCategoryId" parameterType="long" resultType="org.chenyu.entity.Article">
-        SELECT a.*,c.name as category FROM article a,category c WHERE a.status = 1 AND a.categoryId=c.id AND categoryId=#{categoryId}
+        SELECT a.*,c.name as category FROM article a,category c WHERE a.status = 1 AND a.categoryId=c.id AND categoryId=#{categoryId} order by date desc
     </select>
 </mapper>

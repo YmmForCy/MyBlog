@@ -6,6 +6,7 @@ import org.chenyu.entity.User;
 import org.chenyu.service.ArticleService;
 import org.chenyu.service.UserService;
 import org.pegdown.PegDownProcessor;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -15,8 +15,10 @@ import java.util.List;
 public interface ArticleDao {
     public Article getArticleById(@Param("id") Long id);
 
+    //首页查询，只查询10篇文章
     public List<Article> getFirst10Article();
 
+    //根据分类查询所有
     public List<Article> getArticlesByCategoryId(Long categoryId);
 
     public List<Category> getCategories();

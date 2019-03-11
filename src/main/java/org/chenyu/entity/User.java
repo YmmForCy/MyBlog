@@ -1,9 +1,11 @@
 package org.chenyu.entity;
 
+import java.io.Serializable;
+
 /**
  * Created by chenyu on 17-3-10.
  */
-public class User {
+public class User implements Serializable {
     private String username;
     private String password;
 

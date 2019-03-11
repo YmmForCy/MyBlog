@@ -1,9 +1,11 @@
 package org.chenyu.entity;
 
+import java.io.Serializable;
+
 /**
  * Created by chenyu on 17-3-10.
  */
-public class Article {
+public class Article implements Serializable {
     private long id;
     private String title;
     private String content;

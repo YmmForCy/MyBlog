@@ -54,6 +54,10 @@
             </div><!--/.well -->
         </div><!--/span-->
         <div class="span9">
+            <%--<button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">
+                返回
+            </button>--%>
+
             <div class="panel-heading">
                 <h1 class="panel-title">${article.title}</h1>
             </div>

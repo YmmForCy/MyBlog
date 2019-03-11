@@ -53,6 +53,9 @@
                         <button onclick="onLogout()" type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">
                             退出
                         </button>
+                        <button onclick="goAdmin()" type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">
+                            后台
+                        </button>
                     </c:if>
                 </form>
 
@@ -89,7 +92,11 @@
     }
 
     function onLogout() {
-        location.href = "/chenyu/doLogout"
+        location.href = "/chenyu/doLogout";
+    }
+
+    function goAdmin() {
+        location.href = "/chenyu";
     }
 
     /*function getQueryVariable()
@@ -104,10 +111,10 @@
         document.getElementById("searchText").value = para[1];
     }*/
     //回车提交事件
-    $("body").keydown(function() {
+    /*$("body").keydown(function() {
         if (event.keyCode == "13") {//keyCode=13是回车键
             searchArticle();
         }
-    });
+    });*/
     //--------回车提交事件完毕---------------------//
 </script>
